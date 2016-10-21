@@ -19,6 +19,7 @@
     <div class="point left bottom"></div>
     <div class="point center bottom"></div>
     <div class="point right bottom"></div>
+    <div class="point center out"></div>
   </div>
 </template>
 
@@ -61,12 +62,43 @@
 </script>
 
 <style lang="scss" scoped>
+  $line-width: 1px;
+
   .line {
-    width: 100%;
+    background: #000;
+    position: absolute;
+
+    &.out {
+
+    }
+    &.top {
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: $line-width;
+    }
+    &.right {
+      right: 0;
+      top: 0;
+      width: $line-width;
+      height: 100%;
+    }
+    &.left {
+      left: 0;
+      top: 0;
+      width: $line-width;
+      height: 100%;
+    }
+    &.bottom {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: $line-width;
+    }
   }
 
-  $point-width: 20px;
-  $point-height: 20px;
+  $point-width: 10px;
+  $point-height: 10px;
 
   $point-width-half: $point-width / 2;
   $point-height-half: $point-height / 2;
@@ -78,6 +110,10 @@
     background: blue;
     border-radius: $point-width;
 
+    &.out {
+      background: green;
+      top: -30px;
+    }
     &.top {
       top: - $point-height-half;
     }
