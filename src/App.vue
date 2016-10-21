@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <yuki-draggable>test</yuki-draggable>
+    <yuki-draggable v-model="item1">test1</yuki-draggable>
+    <yuki-draggable v-model="item2">test2</yuki-draggable>
   </div>
 </template>
 
@@ -11,6 +12,18 @@ export default {
   name: 'app',
   components: {
     YukiDraggable
+  },
+  data: function () {
+    return {
+      item1: {
+        top: 100,
+        left: 100
+      },
+      item2: {
+        top: 240,
+        left: 100
+      }
+    }
   }
 }
 </script>

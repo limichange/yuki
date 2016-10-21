@@ -25,47 +25,65 @@
 <script>
   export default {
     name: 'YukiDraggable',
+    props: {
+      value: {
+        type: Object
+      }
+    },
     data () {
       return {
         isDragging: false,
-        left: 0,
-        top: 0,
         currentX: 0,
         currentY: 0,
-        lastX: 0,
-        lastY: 0
+        lastX: this.value.left,
+        lastY: this.value.top,
+        left: this.value.left,
+        top: this.value.top
+      }
+    },
+    mounted () {
+      var self = this
+      console.log(self.lastX)
+      self.$el.style.left = self.lastX + 'px'
+      self.$el.style.top = self.lastY + 'px'
+    },
+    watch: {
+      value (val) {
+        this.$nextTick(() => {
+          this.updatePopper()
+        })
       }
     },
     methods: {
-      mousedown (event) {
+      mousedown (e) {
         var self = this
         self.isDragging = true
-        var e = event
         self.currentX = e.clientX
         self.currentY = e.clientY
-        event.target.classList.add('draging')
+        e.target.classList.add('draging')
       },
-      mousemove (event) {
+      mousemove (e) {
         if (this.isDragging) {
-          var e = event
+          var self = this
           var nowX = e.clientX
           var nowY = e.clientY
-          var disX = nowX - this.currentX
-          var disY = nowY - this.currentY
-          this.$el.style.left = parseInt(this.left) + disX + 'px'
-          this.$el.style.top = parseInt(this.top) + disY + 'px'
-          this.lastX = this.left + disX
-          this.lastY = this.top + disY
+          var disX = nowX - self.currentX
+          var disY = nowY - self.currentY
+          self.$el.style.left = parseInt(self.left) + disX + 'px'
+          self.$el.style.top = parseInt(self.top) + disY + 'px'
+          self.lastX = self.left + disX
+          self.lastY = self.top + disY
         }
       },
-      mouseup (event) {
-        this.isDragging = false
-        this.$el.style.left = this.lastX + 'px'
-        this.$el.style.top = this.lastY + 'px'
-        this.left = this.lastX
-        this.top = this.lastY
+      mouseup (e) {
+        var self = this
+        self.isDragging = false
+        self.$el.style.left = self.lastX + 'px'
+        self.$el.style.top = self.lastY + 'px'
+        self.left = self.lastX
+        self.top = self.lastY
 
-        event.target.classList.remove('draging')
+        e.target.classList.remove('draging')
       }
     }
   }
