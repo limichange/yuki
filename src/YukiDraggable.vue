@@ -2,7 +2,8 @@
   <div @mousedown="mousedown"
        @mouseup="mouseup"
        @mousemove="mousemove"
-       class="main">
+       v-bind:style="styleObject"
+       class="main-div">
     <slot></slot>
   </div>
 </template>
@@ -12,30 +13,40 @@
     name: 'YukiDraggable',
     data () {
       return {
-
+        styleObject: {
+          position: 'absolute',
+          width: '100px',
+          height: '100px',
+          left: '100px',
+          top: '100px',
+          background: '#eeeeee'
+        }
       }
     },
+
     methods: {
-      mousedown () {
+      mousedown (event) {
         console.log('mousedown')
       },
-      mousemove () {
+      mousemove (event) {
+        this._generatePosition(event)
         console.log('mousemove')
       },
-      mouseup () {
+      mouseup (event) {
         console.log('mouseup')
+      },
+      _generatePosition (event) {
+        var pageX = event.pageX
+        var pageY = event.pageY
+
+        console.log(pageX, pageY)
       }
     }
   }
 </script>
 
 <style scoped>
-  .main {
-    background: #A47D29;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 200px;
-    height: 200px;
+  .main-div {
+
   }
 </style>
