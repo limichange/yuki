@@ -1,8 +1,7 @@
 <template>
   <div @mousedown="mousedown"
        @mouseup="mouseup"
-       @mousemove="mousemove"
-       v-bind:style="styleObject"
+       @mousemove.stop="mousemove"
        class="main-div">
     <slot></slot>
 
@@ -28,34 +27,45 @@
     name: 'YukiDraggable',
     data () {
       return {
-        styleObject: {
-          position: 'absolute',
-          width: '100px',
-          height: '100px',
-          left: '100px',
-          top: '100px',
-          background: '#00A1CA'
-        }
+        isDragging: false,
+        left: 0,
+        top: 0,
+        currentX: 0,
+        currentY: 0,
+        lastX: 0,
+        lastY: 0
       }
     },
     methods: {
       mousedown (event) {
-        console.log('mousedown')
+        var self = this
+        self.isDragging = true
+        var e = event
+        self.currentX = e.clientX
+        self.currentY = e.clientY
         event.target.classList.add('draging')
       },
       mousemove (event) {
-        this._generatePosition(event)
-        console.log('mousemove')
+        if (this.isDragging) {
+          var e = event
+          var nowX = e.clientX
+          var nowY = e.clientY
+          var disX = nowX - this.currentX
+          var disY = nowY - this.currentY
+          this.$el.style.left = parseInt(this.left) + disX + 'px'
+          this.$el.style.top = parseInt(this.top) + disY + 'px'
+          this.lastX = this.left + disX
+          this.lastY = this.top + disY
+        }
       },
       mouseup (event) {
-        console.log('mouseup')
-        event.target.classList.remove('draging')
-      },
-      _generatePosition (event) {
-        var pageX = event.pageX
-        var pageY = event.pageY
+        this.isDragging = false
+        this.$el.style.left = this.lastX + 'px'
+        this.$el.style.top = this.lastY + 'px'
+        this.left = this.lastX
+        this.top = this.lastY
 
-        console.log(pageX, pageY)
+        event.target.classList.remove('draging')
       }
     }
   }
@@ -137,6 +147,11 @@
   }
 
   .main-div {
-
+    left: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background: #00A1CA;
   }
 </style>
