@@ -1,7 +1,8 @@
 <template>
   <div @mousedown="mousedown"
        @mouseup="mouseup"
-       @mousemove.stop="mousemove"
+       @mousemove="mousemove"
+       @mouseover="mouseover"
        class="main-div">
     <slot></slot>
 
@@ -50,6 +51,9 @@
       self._updateSize(self.width, self.height)
     },
     methods: {
+      mouseover () {
+        this.isDragging = false
+      },
       mousedown (e) {
         var self = this
         self.isDragging = true
@@ -75,7 +79,7 @@
         self._updatePosition(self.lastX, self.lastY)
         self.left = self.lastX
         self.top = self.lastY
-        // this.$emit('change', this.value)
+        this.$emit('input', {left: self.left})
         e.target.classList.remove('draging')
       },
       _updatePosition (left, top) {
