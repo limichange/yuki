@@ -3,27 +3,29 @@
        @mouseup="mouseup"
        @mousemove="mousemove"
        @mouseover="mouseover"
-       class="main-div">
+       class="draggable">
     <slot></slot>
 
-    <div class="line left"></div>
-    <div class="line right"></div>
-    <div class="line top"></div>
-    <div class="line bottom"></div>
-
-    <point v-for="point in points" v-show="isSelected" v-bind:value="point"></point>
+    <c-line v-for="line in lines" v-show="isSelected" v-bind:value="line"></c-line>
+    <c-point v-for="point in points" v-show="isSelected" v-bind:value="point"></c-point>
   </div>
 </template>
 
 <script>
-  import Point from './Point.vue'
+  import CPoint from './Point.vue'
+  import CLine from './Line.vue'
 
   export default {
     name: 'CDraggable',
-    componentName: 'draggable',
     props: ['value'],
     data () {
       return {
+        lines: [
+          ['top'],
+          ['bottom'],
+          ['left'],
+          ['right']
+        ],
         points: [
           ['left', 'top'],
           ['top', 'center'],
@@ -45,7 +47,8 @@
       }
     },
     components: {
-      Point
+      CPoint,
+      CLine
     },
     mounted () {
       var self = this
@@ -107,42 +110,8 @@
 </script>
 
 <style lang="scss" scoped>
-  $line-width: 1px;
-
-  .line {
-    background: #000;
-    position: absolute;
-
-    &.out {
-
-    }
-    &.top {
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: $line-width;
-    }
-    &.right {
-      right: 0;
-      top: 0;
-      width: $line-width;
-      height: 100%;
-    }
-    &.left {
-      left: 0;
-      top: 0;
-      width: $line-width;
-      height: 100%;
-    }
-    &.bottom {
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: $line-width;
-    }
-  }
-
-  .main-div {
+  .draggable {
+    user-select: none;
     position: absolute;
     background: #00A1CA;
   }

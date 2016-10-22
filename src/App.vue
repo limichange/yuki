@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import CDraggable from './CDraggable.vue'
+import CDraggable from './Draggable.vue'
 
 export default {
   name: 'app',
