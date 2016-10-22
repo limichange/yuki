@@ -11,24 +11,31 @@
     <div class="line top"></div>
     <div class="line bottom"></div>
 
-    <div class="point left top"></div>
-    <div class="point top center"></div>
-    <div class="point right top"></div>
-    <div class="point left middle"></div>
-    <div class="point right middle"></div>
-    <div class="point left bottom"></div>
-    <div class="point center bottom"></div>
-    <div class="point right bottom"></div>
-    <div class="point center out"></div>
+    <point v-for="point in points" v-show="isSelected" v-bind:value="point"></point>
   </div>
 </template>
 
 <script>
+  import Point from './Point.vue'
+
   export default {
-    name: 'YukiDraggable',
+    name: 'CDraggable',
+    componentName: 'draggable',
     props: ['value'],
     data () {
       return {
+        points: [
+          ['left', 'top'],
+          ['top', 'center'],
+          ['right', 'top'],
+          ['left', 'middle'],
+          ['right', 'middle'],
+          ['left', 'bottom'],
+          ['center', 'bottom'],
+          ['right', 'bottom'],
+          ['center', 'out']
+        ],
+        isSelected: false,
         isDragging: false,
         currentX: 0,
         currentY: 0,
@@ -36,6 +43,9 @@
         lastX: this.value.left,
         lastY: this.value.top
       }
+    },
+    components: {
+      Point
     },
     mounted () {
       var self = this
@@ -48,6 +58,7 @@
       },
       mousedown (e) {
         var self = this
+        self.isSelected = true
         self.isDragging = true
         self.currentX = e.clientX
         self.currentY = e.clientY
@@ -131,50 +142,7 @@
     }
   }
 
-  $point-width: 10px;
-  $point-height: 10px;
-
-  $point-width-half: $point-width / 2;
-  $point-height-half: $point-height / 2;
-
-  .point {
-    position: absolute;
-    width: $point-width;
-    height: $point-height;
-    background: white;
-    border-radius: $point-width;
-    border: 1px solid black;
-    box-sizing: border-box;
-
-    &.out {
-      background: green;
-      top: -30px;
-    }
-    &.top {
-      top: - $point-height-half;
-    }
-    &.bottom {
-      bottom: - $point-height-half;
-    }
-    &.left {
-      left: - $point-width-half;
-    }
-    &.right {
-      right: - $point-width-half;
-    }
-    &.middle {
-      top: 50%;
-      margin-top: - $point-height-half;
-    }
-    &.center {
-      left: 50%;
-      margin-left: - $point-width-half;
-    }
-  }
-
   .main-div {
-    width: 100px;
-    height: 100px;
     position: absolute;
     background: #00A1CA;
   }

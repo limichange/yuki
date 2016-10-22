@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <yuki-draggable v-for="item in items" :value="item">
+    <c-draggable v-for="item in items" :value="item">
       <div v-text="item.message"></div>
-    </yuki-draggable>
+    </c-draggable>
   </div>
 </template>
 
 <script>
-import YukiDraggable from './YukiDraggable.vue'
+import CDraggable from './CDraggable.vue'
 
 export default {
   name: 'app',
   components: {
-    YukiDraggable
+    CDraggable
   },
   data: function () {
     return {
