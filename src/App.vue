@@ -2,6 +2,7 @@
   <div id="app">
     <yuki-draggable v-model="item1">test1</yuki-draggable>
     <yuki-draggable v-model="item2">test2</yuki-draggable>
+    <yuki-draggable v-model="item3">test3</yuki-draggable>
   </div>
 </template>
 
@@ -17,11 +18,24 @@ export default {
     return {
       item1: {
         top: 100,
-        left: 100
+        left: 100,
+        width: 200,
+        height: 200,
+        index: 1
       },
       item2: {
         top: 240,
-        left: 100
+        left: 100,
+        width: 200,
+        height: 200,
+        index: 2
+      },
+      item3: {
+        top: 240,
+        left: 240,
+        width: 200,
+        height: 200,
+        index: 3
       }
     }
   }

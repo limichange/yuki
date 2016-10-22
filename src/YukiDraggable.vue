@@ -23,6 +23,9 @@
 </template>
 
 <script>
+  import Events from 'events'
+  console.log(Events)
+
   export default {
     name: 'YukiDraggable',
     props: {
@@ -43,16 +46,8 @@
     },
     mounted () {
       var self = this
-      console.log(self.lastX)
-      self.$el.style.left = self.lastX + 'px'
-      self.$el.style.top = self.lastY + 'px'
-    },
-    watch: {
-      value (val) {
-        this.$nextTick(() => {
-          this.updatePopper()
-        })
-      }
+      self._updatePosition(self.lastX, self.lastY)
+      self._updateSize(self.width, self.height)
     },
     methods: {
       mousedown (e) {
@@ -69,8 +64,7 @@
           var nowY = e.clientY
           var disX = nowX - self.currentX
           var disY = nowY - self.currentY
-          self.$el.style.left = parseInt(self.left) + disX + 'px'
-          self.$el.style.top = parseInt(self.top) + disY + 'px'
+          self._updatePosition((self.left + disX), (self.top + disY))
           self.lastX = self.left + disX
           self.lastY = self.top + disY
         }
@@ -78,12 +72,21 @@
       mouseup (e) {
         var self = this
         self.isDragging = false
-        self.$el.style.left = self.lastX + 'px'
-        self.$el.style.top = self.lastY + 'px'
+        self._updatePosition(self.lastX, self.lastY)
         self.left = self.lastX
         self.top = self.lastY
-
+        // this.$emit('change', this.value)
         e.target.classList.remove('draging')
+      },
+      _updatePosition (left, top) {
+        var self = this
+        self.$el.style.left = `${parseInt(left)}px`
+        self.$el.style.top = `${parseInt(top)}px`
+      },
+      _updateSize (width, height) {
+        var self = this
+        self.$el.style.height = `${parseInt(height)}px`
+        self.$el.style.width = `${parseInt(width)}px`
       }
     }
   }
@@ -165,8 +168,6 @@
   }
 
   .main-div {
-    left: 0;
-    top: 0;
     width: 100px;
     height: 100px;
     position: absolute;
