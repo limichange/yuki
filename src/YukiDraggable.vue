@@ -24,35 +24,27 @@
 </template>
 
 <script>
-  import Events from 'events'
-  console.log(Events)
-
   export default {
     name: 'YukiDraggable',
-    props: {
-      value: {
-        type: Object
-      }
-    },
+    props: ['value'],
     data () {
       return {
         isDragging: false,
         currentX: 0,
         currentY: 0,
+        v: this.value,
         lastX: this.value.left,
-        lastY: this.value.top,
-        left: this.value.left,
-        top: this.value.top
+        lastY: this.value.top
       }
     },
     mounted () {
       var self = this
-      self._updatePosition(self.lastX, self.lastY)
-      self._updateSize(self.width, self.height)
+      self._updatePosition(self.v)
+      self._updateSize(self.v)
     },
     methods: {
-      mouseover () {
-        this.isDragging = false
+      mouseover (e) {
+        this._dragEnd(e)
       },
       mousedown (e) {
         var self = this
@@ -68,26 +60,33 @@
           var nowY = e.clientY
           var disX = nowX - self.currentX
           var disY = nowY - self.currentY
-          self._updatePosition((self.left + disX), (self.top + disY))
-          self.lastX = self.left + disX
-          self.lastY = self.top + disY
+          self.lastX = self.v.left + disX
+          self.lastY = self.v.top + disY
+
+          self._updatePosition({
+            left: self.v.left + disX,
+            top: self.v.top + disY
+          })
         }
       },
       mouseup (e) {
+        this._dragEnd(e)
+      },
+      _dragEnd (e) {
         var self = this
         self.isDragging = false
-        self._updatePosition(self.lastX, self.lastY)
-        self.left = self.lastX
-        self.top = self.lastY
-        this.$emit('input', {left: self.left})
+        self.v.left = self.lastX
+        self.v.top = self.lastY
+        self._updatePosition(self)
+        self.$emit('input', self.v)
         e.target.classList.remove('draging')
       },
-      _updatePosition (left, top) {
+      _updatePosition ({ left, top }) {
         var self = this
         self.$el.style.left = `${parseInt(left)}px`
         self.$el.style.top = `${parseInt(top)}px`
       },
-      _updateSize (width, height) {
+      _updateSize ({ width, height }) {
         var self = this
         self.$el.style.height = `${parseInt(height)}px`
         self.$el.style.width = `${parseInt(width)}px`
@@ -142,8 +141,10 @@
     position: absolute;
     width: $point-width;
     height: $point-height;
-    background: blue;
+    background: white;
     border-radius: $point-width;
+    border: 1px solid black;
+    box-sizing: border-box;
 
     &.out {
       background: green;
