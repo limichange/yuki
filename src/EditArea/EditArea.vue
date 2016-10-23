@@ -3,9 +3,13 @@
        @mousemove="mousemove"
        @mouseup="mouseup"
        @mousedown="mousedown">
-    <div>x: {{mouseX}}</div>
-    <div>y: {{mouseY}}</div>
+    <c-draggable v-for="item in items" :value="item">
+      <div v-text="item.message"></div>
+    </c-draggable>
     <slot></slot>
+    <div class="info-panel">
+      <div>x: {{mouseX}} y: {{mouseY}}</div>
+    </div>
   </div>
 </template>
 
@@ -18,10 +22,36 @@
     name: 'EditArea',
     componentName: 'EditArea',
     mixins: [emitter],
+    components: {
+      CDraggable
+    },
     data () {
       return {
         mouseX: 0,
-        mouseY: 0
+        mouseY: 0,
+        items: [{
+          message: 'test1',
+          top: 100,
+          left: 100,
+          width: 150,
+          height: 100,
+          index: 1,
+          background: '#eeeeee'
+        }, {
+          message: 'test2',
+          top: 240,
+          left: 240,
+          width: 100,
+          height: 100,
+          index: 3
+        }, {
+          message: 'test3',
+          top: 240,
+          left: 100,
+          width: 70,
+          height: 100,
+          index: 5
+        }]
       }
     },
     methods: {
@@ -43,8 +73,16 @@
 
 <style lang="scss" scoped>
   .editArea {
+    position: relative;
     width: 960px;
     height: 460px;
     background: #eeeeee;
+  }
+
+  .info-panel {
+    position: absolute;
+    display: flex;
+    right: 0;
+    bottom: 0;
   }
 </style>
