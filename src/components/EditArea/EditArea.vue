@@ -14,8 +14,8 @@
 </template>
 
 <script>
-  import emitter from '../mixins/emitter'
   import _ from 'lodash'
+  import emitter from '../../mixins/emitter'
   import CDraggable from '../Draggable'
 
   export default {

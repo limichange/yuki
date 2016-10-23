@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <c-edit-area>
-
-    </c-edit-area>
+    <c-edit-area></c-edit-area>
   </div>
 </template>
 
 <script>
-import CEditArea from './EditArea'
+import CEditArea from './components/EditArea'
 
 export default {
   name: 'app',

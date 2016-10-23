@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import emitter from '../mixins/emitter'
+  import emitter from '../../mixins/emitter'
   import CPoint from './Point.vue'
   import CLine from './Line.vue'
 
