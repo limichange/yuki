@@ -6,8 +6,8 @@
        class="draggable">
     <slot></slot>
 
-    <c-line v-for="line in lines" v-show="isSelected" v-bind:value="line"></c-line>
-    <c-point v-for="point in points" v-show="isSelected" v-bind:value="point"></c-point>
+    <c-line v-for="line in lines" v-show="isSelected" :value="line"></c-line>
+    <c-point v-for="point in points" v-show="isSelected" :value="point"></c-point>
   </div>
 </template>
 

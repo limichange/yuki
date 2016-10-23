@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import CDraggable from './Draggable.vue'
+import CDraggable from './Draggable'
 
 export default {
   name: 'app',
@@ -20,9 +20,10 @@ export default {
         message: 'test1',
         top: 100,
         left: 100,
-        width: 100,
+        width: 150,
         height: 100,
-        index: 1
+        index: 1,
+        background: '#eeeeee'
       }, {
         message: 'test2',
         top: 240,
