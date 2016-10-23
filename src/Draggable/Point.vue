@@ -1,8 +1,8 @@
 <template>
   <div class="point"
-       @mouseup.stop="mouseup"
-       @mousemove.stop="mousemove"
-       @mousedown.stop="mousedown">
+       @mouseup="mouseup"
+       @mousemove="mousemove"
+       @mousedown="mousedown">
   </div>
 </template>
 

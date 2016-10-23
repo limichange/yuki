@@ -1,8 +1,6 @@
 <template>
   <div @mousedown="mousedown"
        @mouseup="mouseup"
-       @mousemove="mousemove"
-       @mouseover="mouseover"
        class="draggable">
     <div>{{lastX}}, {{lastY}}</div>
     <slot></slot>
@@ -13,11 +11,14 @@
 </template>
 
 <script>
+  import emitter from '../mixins/emitter'
   import CPoint from './Point.vue'
   import CLine from './Line.vue'
 
   export default {
-    name: 'CDraggable',
+    name: 'Draggable',
+    componentName: 'Draggable',
+    mixins: [emitter],
     props: ['value'],
     data () {
       return {
@@ -55,11 +56,9 @@
       var self = this
       self._updatePosition(self.v)
       self._updateSize(self.v)
+      self.$on('mousemove', self.mousemove)
     },
     methods: {
-      mouseover (e) {
-        this._dragEnd(e)
-      },
       mousedown (e) {
         var self = this
         self.isSelected = true
