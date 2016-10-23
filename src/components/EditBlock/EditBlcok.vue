@@ -1,8 +1,12 @@
 <template>
-  <div class="editBlock">
-    <!-- <c-draggable :value="item"></c-draggable> -->
-    <!-- <c-resizable :value="item"></c-resizable> -->
-    <div v-text="v.message"></div>
+  <div class="editBlock"
+       @mousedown="mousedown"
+       @mouseup="mouseup">
+    <div class="content">
+      <slot></slot>
+    </div>
+    <c-draggable :value="v"></c-draggable>
+    <c-resizable :value="v"></c-resizable>
   </div>
 </template>
 
@@ -25,15 +29,35 @@
         v: this.value
       }
     },
+    mounted () {
+      var self = this
+      self.$on('mousemove', self.mousemove)
+      self._updatePosition(self.v)
+      self._updateSize(self.v)
+    },
     methods: {
-      mousemove () {
-
+      mousemove (e) {
+        var self = this
+        self.broadcast(CDraggable.componentName, 'mousemove', e)
+        this._updatePosition(this)
       },
-      mouseup () {
-
+      mouseup (e) {
+        console.log('EditBlock - mouseup')
+        this.broadcast(CDraggable.componentName, 'mouseup', e)
       },
-      mousedown () {
-
+      mousedown (e) {
+        this.broadcast(CDraggable.componentName, 'mousedown', e)
+        this._updatePosition(this)
+      },
+      _updatePosition ({ left, top }) {
+        var self = this
+        self.$el.style.left = `${parseInt(left)}px`
+        self.$el.style.top = `${parseInt(top)}px`
+      },
+      _updateSize ({ width, height }) {
+        var self = this
+        self.$el.style.height = `${parseInt(height)}px`
+        self.$el.style.width = `${parseInt(width)}px`
       }
     }
   }
@@ -42,5 +66,11 @@
 <style lang="scss" scoped>
   .editBlock {
     position: absolute;
+
+    .content {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
   }
 </style>

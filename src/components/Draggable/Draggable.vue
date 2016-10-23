@@ -27,20 +27,21 @@
     },
     mounted () {
       var self = this
-      self._updatePosition(self.v)
-      self._updateSize(self.v)
       self.$on('mousemove', self.mousemove)
+      self.$on('mousedown', self.mousedown)
+      self.$on('mouseup', self.mouseup)
     },
     methods: {
       mousedown (e) {
+        console.log(e)
         var self = this
         self.isSelected = true
         self.isDragging = true
         self.currentX = e.clientX
         self.currentY = e.clientY
-        e.target.classList.add('draging')
       },
       mousemove (e) {
+        console.log(e)
         if (this.isDragging) {
           var self = this
           var nowX = e.clientX
@@ -50,10 +51,10 @@
           self.lastX = self.v.left + disX
           self.lastY = self.v.top + disY
 
-          self._updatePosition({
-            left: self.lastX,
-            top: self.lastY
-          })
+          // self._updatePosition({
+          //   left: self.lastX,
+          //   top: self.lastY
+          // })
         }
       },
       mouseup (e) {
@@ -64,7 +65,7 @@
         self.isDragging = false
         self.v.left = self.lastX
         self.v.top = self.lastY
-        self._updatePosition(self)
+        // self._updatePosition(self)
         self.$emit('input', self.v)
         e.target.classList.remove('draging')
       },
@@ -84,8 +85,11 @@
 
 <style lang="scss" scoped>
   .draggable {
+    width: 100%;
+    height: 100%;
     user-select: none;
     position: absolute;
     background: #00A1CA;
+    opacity: .4;
   }
 </style>

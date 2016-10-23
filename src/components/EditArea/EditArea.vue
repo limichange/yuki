@@ -3,7 +3,9 @@
        @mousemove="mousemove"
        @mouseup="mouseup"
        @mousedown="mousedown">
-    <c-edit-block v-for="item in items" :value="item"></c-edit-block>
+    <c-edit-block v-for="item in items" :value="item">
+      <div v-text="item.message"></div>
+    </c-edit-block>
 
     <div class="info-panel">
       <div>x: {{mouseX}} y: {{mouseY}}</div>

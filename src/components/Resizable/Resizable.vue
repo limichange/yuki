@@ -19,11 +19,6 @@
       CPoint,
       CLine
     },
-    mounted () {
-      var self = this
-      self._updatePosition(self.v)
-      self._updateSize(self.v)
-    },
     data: function () {
       return {
         isSelected: true,
@@ -51,16 +46,6 @@
       mousedown () {
         console.log('mousedown')
         this.isSelected = true
-      },
-      _updatePosition ({ left, top }) {
-        var self = this
-        self.$el.style.left = `${parseInt(left)}px`
-        self.$el.style.top = `${parseInt(top)}px`
-      },
-      _updateSize ({ width, height }) {
-        var self = this
-        self.$el.style.height = `${parseInt(height)}px`
-        self.$el.style.width = `${parseInt(width)}px`
       }
     }
   }
@@ -68,6 +53,8 @@
 
 <style lang="scss" scoped>
   .resizable {
+    width: 100%;
+    height: 100%;
     position: absolute;
   }
 </style>
