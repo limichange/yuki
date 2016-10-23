@@ -1,18 +1,22 @@
 <template>
   <div id="app">
-    <c-draggable v-for="item in items" :value="item">
-      <div v-text="item.message"></div>
-    </c-draggable>
+    <c-edit-area>
+      <c-draggable v-for="item in items" :value="item">
+        <div v-text="item.message"></div>
+      </c-draggable>
+    </c-edit-area>
   </div>
 </template>
 
 <script>
 import CDraggable from './Draggable'
+import CEditArea from './EditArea'
 
 export default {
   name: 'app',
   components: {
-    CDraggable
+    CDraggable,
+    CEditArea
   },
   data: function () {
     return {
@@ -49,9 +53,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #eeeeee;
-  width: 960px;
-  height: 960px;
   margin: 0 auto;
   position: relative;
 }
