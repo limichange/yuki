@@ -1,7 +1,8 @@
 <template>
   <div class="point"
-       @mouseup="mouseup"
-       @mousedown="mousedown">
+       @mouseup.stop="mouseup"
+       @mousemove.stop="mousemove"
+       @mousedown.stop="mousedown">
   </div>
 </template>
 
@@ -11,16 +12,30 @@
     props: ['value'],
     data: function () {
       return {
-
+        isDragging: false
       }
     },
     mounted () {
-      this.$el.classList.add(this.value[0])
-      this.$el.classList.add(this.value[1])
+      this.$el.classList.add(this.value.position[0])
+      this.$el.classList.add(this.value.position[1])
     },
     methods: {
-      mouseup () {},
-      mousedown () {}
+      mousemove (e) {
+        var self = this
+        if (self.isDragging) {
+
+        }
+      },
+      mouseup (e) {
+        var self = this
+        self.isDragging = false
+      },
+      mousedown (e) {
+        var self = this
+        self.isDragging = true
+        self.currentX = e.clientX
+        self.currentY = e.clientY
+      }
     }
   }
 </script>

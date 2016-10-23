@@ -4,6 +4,7 @@
        @mousemove="mousemove"
        @mouseover="mouseover"
        class="draggable">
+    <div>{{lastX}}, {{lastY}}</div>
     <slot></slot>
 
     <c-line v-for="line in lines" v-show="isSelected" :value="line"></c-line>
@@ -27,15 +28,15 @@
           ['right']
         ],
         points: [
-          ['left', 'top'],
-          ['top', 'center'],
-          ['right', 'top'],
-          ['left', 'middle'],
-          ['right', 'middle'],
-          ['left', 'bottom'],
-          ['center', 'bottom'],
-          ['right', 'bottom'],
-          ['center', 'out']
+          {position: ['left', 'top']},
+          {position: ['top', 'center']},
+          {position: ['right', 'top']},
+          {position: ['left', 'middle']},
+          {position: ['right', 'middle']},
+          {position: ['left', 'bottom']},
+          {position: ['center', 'bottom']},
+          {position: ['right', 'bottom']},
+          {position: ['center', 'out']}
         ],
         isSelected: false,
         isDragging: false,
@@ -78,8 +79,8 @@
           self.lastY = self.v.top + disY
 
           self._updatePosition({
-            left: self.v.left + disX,
-            top: self.v.top + disY
+            left: self.lastX,
+            top: self.lastY
           })
         }
       },

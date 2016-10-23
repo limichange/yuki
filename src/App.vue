@@ -35,7 +35,7 @@ export default {
         message: 'test3',
         top: 240,
         left: 100,
-        width: 100,
+        width: 70,
         height: 100,
         index: 5
       }]
@@ -49,8 +49,10 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background: #eeeeee;
+  width: 960px;
+  height: 960px;
+  margin: 0 auto;
+  position: relative;
 }
 </style>
