@@ -3,10 +3,8 @@
        @mousemove="mousemove"
        @mouseup="mouseup"
        @mousedown="mousedown">
-    <c-draggable v-for="item in items" :value="item">
-      <div v-text="item.message"></div>
-    </c-draggable>
-    <slot></slot>
+    <c-edit-block v-for="item in items" :value="item"></c-edit-block>
+
     <div class="info-panel">
       <div>x: {{mouseX}} y: {{mouseY}}</div>
     </div>
@@ -16,17 +14,18 @@
 <script>
   import _ from 'lodash'
   import emitter from '../../mixins/emitter'
-  import CDraggable from '../Draggable'
+  import CEditBlock from '../EditBlock'
 
   export default {
     name: 'EditArea',
-    componentName: 'EditArea',
+    componentName: 'CEditArea',
     mixins: [emitter],
     components: {
-      CDraggable
+      CEditBlock
     },
     data () {
       return {
+        v: this.value,
         mouseX: 0,
         mouseY: 0,
         items: [{
@@ -59,7 +58,7 @@
         var self = this
         self.mouseX = e.clientX
         self.mouseY = e.clientY
-        self.broadcast(CDraggable.componentName, 'mousemove', e)
+        self.broadcast(CEditBlock.componentName, 'mousemove', e)
       }, 15),
       mouseup () {
 
@@ -74,7 +73,7 @@
 <style lang="scss" scoped>
   .editArea {
     position: relative;
-    width: 960px;
+    width: 100%;
     height: 460px;
     background: #eeeeee;
   }

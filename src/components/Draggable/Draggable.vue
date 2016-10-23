@@ -2,43 +2,20 @@
   <div @mousedown="mousedown"
        @mouseup="mouseup"
        class="draggable">
-    <div>{{lastX}}, {{lastY}}</div>
     <slot></slot>
-
-    <c-line v-for="line in lines" v-show="isSelected" :value="line"></c-line>
-    <c-point v-for="point in points" v-show="isSelected" :value="point"></c-point>
   </div>
 </template>
 
 <script>
   import emitter from '../../mixins/emitter'
-  import CPoint from './Point.vue'
-  import CLine from './Line.vue'
 
   export default {
     name: 'Draggable',
-    componentName: 'Draggable',
+    componentName: 'CDraggable',
     mixins: [emitter],
     props: ['value'],
     data () {
       return {
-        lines: [
-          ['top'],
-          ['bottom'],
-          ['left'],
-          ['right']
-        ],
-        points: [
-          {position: ['left', 'top']},
-          {position: ['top', 'center']},
-          {position: ['right', 'top']},
-          {position: ['left', 'middle']},
-          {position: ['right', 'middle']},
-          {position: ['left', 'bottom']},
-          {position: ['center', 'bottom']},
-          {position: ['right', 'bottom']},
-          {position: ['center', 'out']}
-        ],
         isSelected: false,
         isDragging: false,
         currentX: 0,
@@ -47,10 +24,6 @@
         lastX: this.value.left,
         lastY: this.value.top
       }
-    },
-    components: {
-      CPoint,
-      CLine
     },
     mounted () {
       var self = this
